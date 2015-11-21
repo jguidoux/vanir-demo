@@ -29,16 +29,30 @@ repositories {
 sourceSets.main.java.srcDirs = []
 sourceSets.main.groovy.srcDirs += ["src/main/java"]
 
+springBoot {
+    mainClass = "org.vanir.DemoApplication"
+}
+
 dependencies {
     compile 'org.codehaus.groovy:groovy-all:2.4.4'
     compile('org.springframework.boot:spring-boot-starter-actuator')
     compile('org.springframework.boot:spring-boot-starter-data-rest')
     compile('org.springframework.boot:spring-boot-starter-web')
     compile("org.springframework.boot:spring-boot-starter-thymeleaf")
-    testCompile('org.springframework.boot:spring-boot-starter-test') 
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile 'org.spockframework:spock-spring:1.0-groovy-2.4'
 }
 
-
+sourceSets {
+    integrationTest {
+        groovy {
+            compileClasspath += main.output + test.output
+            runtimeClasspath += main.output + test.output
+//            srcDir file('src/integration-test/groovy')
+        }
+//        resources.srcDir file('src/integrationest/resources')
+    }
+}
 
 task wrapper(type: Wrapper) {
     gradleVersion = '2.9'
