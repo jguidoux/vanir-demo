@@ -18,7 +18,7 @@ class HelloController {
     @RequestMapping("/hello")
     public String index(Model model) {
         model.addAttribute("message", service.sayHello())
-        "hello"
+       return  "hello"
     }
 
 }
